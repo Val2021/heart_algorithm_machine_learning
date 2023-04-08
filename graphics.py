@@ -2,7 +2,7 @@
 import seaborn as sns
 import plotly.express as px
 import matplotlib.pyplot  as plt
-from data_processing import cholesterol_mean,data
+from main import data
 
 
 
@@ -35,7 +35,7 @@ plt.show()
 
 # Serum cholesterol
 
-sns.histplot(cholesterol_mean(), x='Cholesterol', bins=30,color='orange',kde=True,stat='count')
+sns.histplot(data=data, x='Cholesterol', bins=30,color='orange',kde=True,stat='count')
 plt.show()
 
 # Fasting blood sugar

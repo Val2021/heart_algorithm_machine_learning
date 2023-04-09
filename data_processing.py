@@ -10,7 +10,7 @@ data_01=data.isnull().sum()
 # Replace missing values ​​with mean
 def data_processing_age():
     data_01 = pd.DataFrame(data=data)
-    data_01['Age'].fillna(data_01['Age'].mean(), inplace=True)
+    data_01['Age'] = data['Age'].fillna(data_01['Age'].mean()).astype(int)
     return data_01
 
 
@@ -30,6 +30,36 @@ def cholesterol_mean():
     choleszero.Cholesterol.replace(0,np.NaN, inplace= True)
     choleszero['Cholesterol'].fillna(choleszero['Cholesterol'].mean(), inplace=True)
     return choleszero
+
+# Transforming nominal categorical variables into ordinal categorical variables
+
+def ord_variables():
+    ord=cholesterol_mean()
+    ord_replaced = pd.DataFrame.copy(ord)
+    ord_replaced['Sex'].replace({'M':0,'F':1},inplace=True)
+    ord_replaced['ChestPainType'].replace({'TA':0,'ATA':1,'NAP':2,'ASY':3},inplace=True)
+    ord_replaced['RestingECG'].replace({'Normal':0,'ST':1,'LVH':2},inplace=True)
+    ord_replaced['ExerciseAngina'].replace({'N':0,'Y':1},inplace=True)
+    ord_replaced['ST_Slope'].replace({'Up':0,'Flat':1,'Down':2},inplace=True)
+    return ord_replaced
+
+
+#separating the predictor attributes
+
+def predictors_attr():
+    predictors = ord_variables().iloc[:,0:11].values
+    return predictors
+
+
+# Separating target column HeartDisease
+
+def target_attr():
+    target = ord_variables().iloc[:,11].values
+    return target
+
+print(target_attr().shape)
+
+
 
 
 
